@@ -68,6 +68,7 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 | timeFormatter  | MutableState < String >  | Read only (private set)  |
 
 ### Public Method
+
 |  Name |Return Type  |Description|
 | ------------ | ------------ | ------------ |
 |  start() |Unit   |start the timer  |
@@ -79,6 +80,7 @@ You can use this class to format the time values ​​of type Long to String, a
 It also has static methods to format hours, minutes, seconds, and remaining milliseconds separately.
 
 ### Enums
+
 |  Name |View |
 | ------------ | ------------ | ------------ |
 |  MM_SS | 00:00  |
@@ -87,6 +89,7 @@ It also has static methods to format hours, minutes, seconds, and remaining mill
 |HH_MM_SS_SS|00:00:00.00|
 
 ### Formater.Companion methods
+
 |  Name |Return Type  |Description|
 | ------------ | ------------ | ------------ |
 |  Long.hours() |Long   |returns the number of hours  |
