@@ -60,5 +60,5 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
-    implementation project(':StopWatchOrCountdown')
+    implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.0'
 }

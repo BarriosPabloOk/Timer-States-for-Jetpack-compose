@@ -8,12 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.pablobarriosdevs.stopwatchorcountdown.rememberStopWatchOrCountdownState
 import com.pablobarriosdevs.timercomposables.ui.theme.TimerComposablesTheme
 
@@ -27,7 +22,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen()
+                    val sw = rememberStopWatchOrCountdownState(time = 5000, countDown = true)
+
+                    Text(
+                        text = sw.timeFormatted.value,
+                    )
+
+                    Button(
+                        onClick = { sw.start() }
+                    ) {
+                        Text(text = "START")
+                    }
 
                 }
             }
@@ -36,10 +41,9 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
+/*@Composable
 fun MainScreen() {
 
-    val sw = rememberStopWatchOrCountdownState(time = 0, countDown = false)
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -64,13 +68,13 @@ fun MainScreen() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                Button(onClick = { sw.start()}) {
+                Button(onClick = { sw.start() }) {
                     Text(text = "START")
                 }
-                Button(onClick = { sw.pause()}) {
+                Button(onClick = { sw.pause() }) {
                     Text(text = "PAUSE")
                 }
-                Button(onClick = { sw.reset()}) {
+                Button(onClick = { sw.reset() }) {
                     Text(text = "RESET")
                 }
 
@@ -80,5 +84,5 @@ fun MainScreen() {
         }
 
     }
-}
+}*/
 
