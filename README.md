@@ -105,7 +105,7 @@ If you have an idea to improve performance, or to make usability easier, feel fr
 
 ##  Changelog
 - 1.0
-- Initial release
+  - Initial release
 
 ## Demo Android app
 Coming soon...
