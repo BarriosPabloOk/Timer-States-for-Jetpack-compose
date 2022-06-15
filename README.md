@@ -81,8 +81,8 @@ It also has static methods to format hours, minutes, seconds, and remaining mill
 
 ### Enums
 
-|Name|View||
-| ------------ | ------------ | ------------ |
+|Name|View|
+| ------------ | ------------ |
 |  MM_SS |00:00 |
 | MM_SS_SS  |00:00.00 |
 | HH_MM_SS  | 00:00:00 |
