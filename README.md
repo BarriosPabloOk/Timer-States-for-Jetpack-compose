@@ -107,11 +107,8 @@ If you have an idea to improve performance, or to make usability easier, feel fr
 - 1.0
 - Initial release
 
-## Contact me
-Send me an email: pablob1518@gmail.com
-
 ## Demo Android app
-Comming soon..
+Coming soon...
 
 ## License
 
