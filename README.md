@@ -61,11 +61,11 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 ## StopWatchOrCountdown Class
 ### Public Properties
 
-|  Name |Type   |Visibility   |Description|
+|Name|Type|Visibility|
 | ------------ | ------------ | ------------ |
-|  isRunning |Boolean   |Read only (private set)   ||
-| timeInMillis  | Long  | Read only (private set)  |
-| timeFormatter  | MutableState < String >  | Read only (private set)  |
+|isRunning |Boolean|Read only (private set)|
+|timeInMillis| Long|Read only (private set)|
+|timeFormatter| MutableState < String >|Read only (private set)|
 
 ### Public Method
 
@@ -76,26 +76,26 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 |reset()  | Unit  | reset the timer  |
 
 ## Formatter enum class
-You can use this class to format the time values ​​of type Long to String, and thus display them on the screen.
+You can use this class to format the time values of type Long to String, and thus display them on the screen.
 It also has static methods to format hours, minutes, seconds, and remaining milliseconds separately.
 
 ### Enums
 
-|  Name |View |
+|Name|View||
 | ------------ | ------------ | ------------ |
-|  MM_SS | 00:00  |
-| MM_SS_SS  |00:00.00  |
-| HH_MM_SS  | 00:00:00  |
+|  MM_SS |00:00 |
+| MM_SS_SS  |00:00.00 |
+| HH_MM_SS  | 00:00:00 |
 |HH_MM_SS_SS|00:00:00.00|
 
-### Formater.Companion methods
+### Formatter.Companion methods
 
 |  Name |Return Type  |Description|
 | ------------ | ------------ | ------------ |
 |  Long.hours() |Long   |returns the number of hours  |
 | Long.minutes() |Long  | returns the number of minutes  |
 |Long.seconds() |Long  | returns the number of seconds  |
-|Long.millis()  | Long |returns the remainig number of miliseconds  |
+|Long.millis()  | Long |returns the remaining number of milliseconds  |
 |formatTime(time : Long, pattern : Formatter)  | String  |returns a formatted string to display on the screen |
 
 
