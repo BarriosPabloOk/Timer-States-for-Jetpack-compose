@@ -8,7 +8,13 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.pablobarriosdevs.stopwatchorcountdown.rememberStopWatchOrCountdownState
 import com.pablobarriosdevs.timercomposables.ui.theme.TimerComposablesTheme
 
@@ -22,18 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val sw = rememberStopWatchOrCountdownState(time = 5000, countDown = true)
-
-                    Text(
-                        text = sw.timeFormatted.value,
-                    )
-
-                    Button(
-                        onClick = { sw.start() }
-                    ) {
-                        Text(text = "START")
-                    }
-
+                    MainScreen()
                 }
             }
         }
@@ -41,9 +36,9 @@ class MainActivity : ComponentActivity() {
 }
 
 
-/*@Composable
+@Composable
 fun MainScreen() {
-
+    val sw = rememberStopWatchOrCountdownState()
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +50,7 @@ fun MainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = sw.timeFormatted.value,
+                text = sw.timeFormatted?.collectAsState()?.value ?: "don't work",
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -84,5 +79,5 @@ fun MainScreen() {
         }
 
     }
-}*/
+}
 

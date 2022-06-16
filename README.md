@@ -23,7 +23,7 @@ allprojects {
 ```groovy
 //build.gradle in app module
 dependencies {
-        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.1'
+        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
 }
 ```
 ```groovy
@@ -56,7 +56,7 @@ setContent {
 1. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
 Text(
-    text = sw.timeFormatted.value,
+    text = sw.timeFormatted?.collectAsState()?.value ?: "don't work",
 )
 ```
 1. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.

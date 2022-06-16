@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import android.util.Log
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.*
@@ -49,7 +50,7 @@ class StopWatchOrCountdown(
 
     init {
         if (_millis < 0L) throw IllegalArgumentException("_millis cannot be less than zero")
-        timeFormatted?.value = Formatter.formatTime(timeInMillis, timePattern)
+        timeFormatted = MutableStateFlow(Formatter.formatTime(timeInMillis, timePattern))
     }
 
 
@@ -79,6 +80,8 @@ class StopWatchOrCountdown(
                 }else{
                     timeFormatted?.value = Formatter.formatTime(timeInMillis, pat)
                 }
+
+                Log.d("null", timeInMillis.toString())
             }
         }
     }
