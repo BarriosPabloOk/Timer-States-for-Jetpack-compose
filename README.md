@@ -56,7 +56,7 @@ setContent {
 2. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
 Text(
-    text = sw.timeFormatted.value,
+    text = sw.timeFormatted?.collectAsState()?.value ?: "don't work"
 )
 ```
 3. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
@@ -76,7 +76,7 @@ Button(
 | ------------ | ------------ | ------------ |
 |isRunning |Boolean|Read only (private set)|
 |timeInMillis| Long|Read only (private set)|
-|timeFormatter| MutableStateFlow < String >|Read only (private set)|
+|timeFormatter| MutableStateFlow < String >? |Read only (private set)|
 
 ### Public Method
 
@@ -115,10 +115,11 @@ This is a personal project that I did because it was difficult for me to impleme
 If you have an idea to improve performance, or to make usability easier, feel free to make a pull request to this project. I will gladly analyze it.
 
 ##  Changelog
-
+- 1.1.1
+    - timeFormatted property's bug fixed
 - 1.0.1
     - Locale.getDefault() added in Formatter class at formatTime() method
-    - timeFormatted property type in StopWatchOrCountdown class  changed to MutableStateFlow<String>
+    - timeFormatted property type in StopWatchOrCountdown class  changed to MutableStateFlow<String>?
 - 1.0
     - Initial release
 
