@@ -10,21 +10,33 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 
 ## How to install dependencies
 1. Add it in your root build.gradle at the end of repositories:
+2. 
 ```groovy
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
-1. Add the dependency
+1. Add the dependency at build.gradle and settings.gradle
 ```groovy
-	dependencies {
-	        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.0'
-	}
+//build.gradle in app module
+dependencies {
+        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.1'
+}
 ```
-
+```groovy
+// al settings.gradle
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven{url 'https://jitpack.io'}
+    }
+    }
+```
 
 ## How to use this library
 1. After installing the necessary dependencies, create  a ***rememberStopWatchOrCountdownState()*** function in your project.
@@ -36,26 +48,25 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 // The sw state will behave like a Stop watch that will start with 5 seconds of initial time. 
 //The pattern was left to format the time that came by default. It will look like this: "mm:ss.SS"
 
-	setContent {
+setContent {
+    val sw = rememberStopWatchOrCountdownState(time = 5000, countDown = false)
 
-				val sw = rememberStopWatchOrCountdownState(time = 5000, countDown = false)
-
-			}
+}
 ```
 1. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
-	Text(
-		text = sw.timeFormatted.value,
-	)
+Text(
+    text = sw.timeFormatted.value,
+)
 ```
 1. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
    Here's how to implement one of those methods from a button.
 ```java
-	Button(
-		onClick = { sw.start( ) }
-	) {
-		Text(text = "START")
-	}
+Button(
+    onClick = { sw.start( ) }
+) {
+    Text(text = "START")
+}
 ```
 
 ## StopWatchOrCountdown Class
@@ -65,7 +76,7 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 | ------------ | ------------ | ------------ |
 |isRunning |Boolean|Read only (private set)|
 |timeInMillis| Long|Read only (private set)|
-|timeFormatter| MutableState < String >|Read only (private set)|
+|timeFormatter| MutableStateFlow < String >|Read only (private set)|
 
 ### Public Method
 
@@ -104,6 +115,10 @@ This is a personal project that I did because it was difficult for me to impleme
 If you have an idea to improve performance, or to make usability easier, feel free to make a pull request to this project. I will gladly analyze it.
 
 ##  Changelog
+
+- 1.0.1
+    - Locale.getDefault() added in Formatter class at formatTime() method
+    - timeFormatted property type in StopWatchOrCountdown class  changed to MutableStateFlow<String>
 - 1.0
   - Initial release
 

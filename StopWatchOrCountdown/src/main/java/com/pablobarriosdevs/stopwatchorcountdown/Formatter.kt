@@ -44,10 +44,10 @@ enum class Formatter(val defaultState: String, val pattern: String) {
                     Instant.ofEpochMilli(time),
                     ZoneId.of("Etc/GMT+0")
                 )
-                val format = DateTimeFormatter.ofPattern(pattern.pattern)
+                val format = DateTimeFormatter.ofPattern(pattern.pattern, Locale.getDefault())
                 format.format(l)
             } else {
-                val format = SimpleDateFormat(pattern.pattern).format(Date(time))
+                val format = SimpleDateFormat(pattern.pattern, Locale.getDefault()).format(Date(time))
                 format
             }
         }

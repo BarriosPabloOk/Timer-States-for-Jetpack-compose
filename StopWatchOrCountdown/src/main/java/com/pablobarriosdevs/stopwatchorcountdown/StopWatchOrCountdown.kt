@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.IllegalArgumentException
 import kotlin.math.abs
 
@@ -43,14 +44,12 @@ class StopWatchOrCountdown(
     private val baseTime = timeInMillis
 
     // states of stopWatch object
-    var timeFormatted = mutableStateOf(
-        Formatter.formatTime(timeInMillis, timePattern)
-    )
+    var timeFormatted : MutableStateFlow<String>? = null
         private set
 
     init {
         if (_millis < 0L) throw IllegalArgumentException("_millis cannot be less than zero")
-        timeFormatted.value = Formatter.formatTime(timeInMillis, timePattern)
+        timeFormatted?.value = Formatter.formatTime(timeInMillis, timePattern)
     }
 
 
@@ -75,10 +74,10 @@ class StopWatchOrCountdown(
                     else timePattern
 
                 if (timeInMillis < 0L) {
-                    timeFormatted.value =
+                    timeFormatted?.value =
                         "- " + Formatter.formatTime(-timeInMillis, pat)
                 }else{
-                    timeFormatted.value = Formatter.formatTime(timeInMillis, pat)
+                    timeFormatted?.value = Formatter.formatTime(timeInMillis, pat)
                 }
             }
         }
@@ -94,7 +93,7 @@ class StopWatchOrCountdown(
         isRunning = false
         lastTimeStamp = 0L
         timeInMillis = baseTime
-        timeFormatted.value =  Formatter.formatTime(baseTime, timePattern)
+        timeFormatted?.value =  Formatter.formatTime(baseTime, timePattern)
     }
 
     private fun Long.incrementOrDecrement(val1:Long, decrement: Boolean): Long{
