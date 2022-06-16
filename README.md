@@ -9,9 +9,9 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 
 
 ## How to install dependencies
-1. Add it in your root build.gradle at the end of repositories:
-2. 
+1. Add it in your root build.gradle at the end of repositories and settings.gradle:
 ```groovy
+//at build.gradle in project
 allprojects {
     repositories {
         ...
@@ -19,15 +19,8 @@ allprojects {
     }
 }
 ```
-1. Add the dependency at build.gradle and settings.gradle
 ```groovy
-//build.gradle in app module
-dependencies {
-        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.1'
-}
-```
-```groovy
-// al settings.gradle
+// at settings.gradle
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -36,6 +29,13 @@ dependencyResolutionManagement {
         maven{url 'https://jitpack.io'}
     }
     }
+```
+1. Add the dependency at build.gradle
+```groovy
+//build.gradle in app module
+dependencies {
+        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.0.1'
+}
 ```
 
 ## How to use this library
