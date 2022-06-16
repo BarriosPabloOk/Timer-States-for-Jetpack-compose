@@ -9,9 +9,9 @@ A StopWatchOrCountdown class is also provided that you can instantiate in a View
 
 
 ## How to install dependencies
-1. Add it in your root build.gradle at the end of repositories:
-2. 
+1. Add it in your root build.gradle at the end of repositories and settings.gradle:
 ```groovy
+//at build.gradle in project
 allprojects {
     repositories {
         ...
@@ -19,15 +19,8 @@ allprojects {
     }
 }
 ```
-1. Add the dependency at build.gradle and settings.gradle
 ```groovy
-//build.gradle in app module
-dependencies {
-        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
-}
-```
-```groovy
-// al settings.gradle
+// at settings.gradle
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -36,6 +29,13 @@ dependencyResolutionManagement {
         maven{url 'https://jitpack.io'}
     }
     }
+```
+2. Add the dependency at build.gradle
+```groovy
+//build.gradle in app module
+dependencies {
+        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
+}
 ```
 
 ## How to use this library
@@ -53,13 +53,13 @@ setContent {
 
 }
 ```
-1. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
+2. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
 Text(
-    text = sw.timeFormatted?.collectAsState()?.value ?: "don't work",
+    text = sw.timeFormatted.value,
 )
 ```
-1. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
+3. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
    Here's how to implement one of those methods from a button.
 ```java
 Button(
@@ -120,7 +120,7 @@ If you have an idea to improve performance, or to make usability easier, feel fr
     - Locale.getDefault() added in Formatter class at formatTime() method
     - timeFormatted property type in StopWatchOrCountdown class  changed to MutableStateFlow<String>
 - 1.0
-  - Initial release
+    - Initial release
 
 ## Demo Android app
 Coming soon...
