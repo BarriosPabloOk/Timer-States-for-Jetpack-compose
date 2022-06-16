@@ -30,7 +30,7 @@ dependencyResolutionManagement {
     }
     }
 ```
-1. Add the dependency at build.gradle
+2. Add the dependency at build.gradle
 ```groovy
 //build.gradle in app module
 dependencies {
@@ -53,13 +53,13 @@ setContent {
 
 }
 ```
-1. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
+2. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
 Text(
     text = sw.timeFormatted.value,
 )
 ```
-1. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
+3. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
    Here's how to implement one of those methods from a button.
 ```java
 Button(
