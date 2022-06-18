@@ -1,5 +1,4 @@
-package com.pablobarriosdevs.stopwatchorcountdown
-
+package com.pablobarriosdevs.stopwatchorcountdown.formatter
 /*Copyright (C) 2022  Pablo Barrios
 
 This program is free software: you can redistribute it and/or modify
@@ -15,7 +14,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
 import android.os.Build
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -24,32 +22,27 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-enum class Formatter(val defaultState: String, val pattern: String) {
-
-    MM_SS(defaultState = "00:00", pattern = "mm:ss"),
-    MM_SS_SS(defaultState = "00:00.00", pattern = "mm:ss.SS"),
-    HH_MM_SS(defaultState = "00:00:00", pattern = "HH:mm:ss"),
-    HH_MM_SS_SS(defaultState = "00:00:00.00", pattern = "HH:mm:ss.SS");
+class Formatter {
 
 
-    companion object {
+    companion object{
         fun Long.hours(): Long = (this / 1000 % 60) / 3600
         fun Long.minutes(): Long = this / 1000 / 60
         fun Long.seconds(): Long = this / 1000 % 60
         fun Long.millis(): Long = this % 1000
+    }
 
-        fun formatTime(time: Long, pattern: Formatter): String {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val l = LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(time),
-                    ZoneId.of("Etc/GMT+0")
-                )
-                val format = DateTimeFormatter.ofPattern(pattern.pattern, Locale.getDefault())
-                format.format(l)
-            } else {
-                val format = SimpleDateFormat(pattern.pattern, Locale.getDefault()).format(Date(time))
-                format
-            }
+    fun formatTime(time: Long, pattern: Patterns): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val l = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(time),
+                ZoneId.of("Etc/GMT+0")
+            )
+            val format = DateTimeFormatter.ofPattern(pattern.pattern, Locale.getDefault())
+            format.format(l)
+        } else {
+            val format = SimpleDateFormat(pattern.pattern, Locale.getDefault()).format(Date(time))
+            format
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.pablobarriosdevs.stopwatchorcountdown
+package com.pablobarriosdevs.stopwatchorcountdown.timers
 
 /*Copyright (C) 2022  Pablo Barrios
 
@@ -18,20 +18,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import android.util.Log
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.mutableStateOf
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Formatter
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.IllegalArgumentException
 import kotlin.math.abs
 
-
+/*This class implement a corutine to work with.
+Is inaccurate.*/
 @Stable
 class StopWatchOrCountdown(
     _millis: Long,
-    private val timePattern :Formatter,
+    private val timePattern : Patterns,
     private val countDown: Boolean) {
 
     //StopWatch attributes
+    private val formatter = Formatter()
     private var coroutine = CoroutineScope(Dispatchers.Main)
 
     var isRunning = false
@@ -50,7 +53,7 @@ class StopWatchOrCountdown(
 
     init {
         if (_millis < 0L) throw IllegalArgumentException("_millis cannot be less than zero")
-        timeFormatted = MutableStateFlow(Formatter.formatTime(timeInMillis, timePattern))
+        timeFormatted = MutableStateFlow(formatter.formatTime(timeInMillis, timePattern))
     }
 
 
@@ -71,14 +74,14 @@ class StopWatchOrCountdown(
                 lastTimeStamp = System.currentTimeMillis()
 
                 val pat = if (abs(timeInMillis) > 3600000)
-                    Formatter.HH_MM_SS_SS
+                    Patterns.HH_MM_SS_SS
                     else timePattern
 
                 if (timeInMillis < 0L) {
                     timeFormatted?.value =
-                        "- " + Formatter.formatTime(-timeInMillis, pat)
+                        "- " + formatter.formatTime(-timeInMillis, pat)
                 }else{
-                    timeFormatted?.value = Formatter.formatTime(timeInMillis, pat)
+                    timeFormatted?.value = formatter.formatTime(timeInMillis, pat)
                 }
 
                 Log.d("null", timeInMillis.toString())
@@ -96,7 +99,7 @@ class StopWatchOrCountdown(
         isRunning = false
         lastTimeStamp = 0L
         timeInMillis = baseTime
-        timeFormatted?.value =  Formatter.formatTime(baseTime, timePattern)
+        timeFormatted?.value =  formatter.formatTime(baseTime, timePattern)
     }
 
     private fun Long.incrementOrDecrement(val1:Long, decrement: Boolean): Long{

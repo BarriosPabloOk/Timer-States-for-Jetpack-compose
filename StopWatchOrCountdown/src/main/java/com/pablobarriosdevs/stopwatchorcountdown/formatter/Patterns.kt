@@ -1,4 +1,5 @@
-package com.pablobarriosdevs.stopwatchorcountdown
+package com.pablobarriosdevs.stopwatchorcountdown.formatter
+
 /*Copyright (C) 2022  Pablo Barrios
 
 This program is free software: you can redistribute it and/or modify
@@ -14,21 +15,20 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 
-@Composable
-fun rememberStopWatchOrCountdownState(
-    time:Long = 0L,
-    pattern: Formatter = Formatter.MM_SS_SS,
-    countDown: Boolean = false
-) : StopWatchOrCountdown {
-    return remember {
-        StopWatchOrCountdown(
-            time,
-            pattern,
-            countDown
-        )
-    }
+import android.os.Build
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
+
+enum class Patterns(val defaultState: String, val pattern: String) {
+
+    MM_SS(defaultState = "00:00", pattern = "mm:ss"),
+    MM_SS_SS(defaultState = "00:00.00", pattern = "mm:ss.SS"),
+    HH_MM_SS(defaultState = "00:00:00", pattern = "HH:mm:ss"),
+    HH_MM_SS_SS(defaultState = "00:00:00.00", pattern = "HH:mm:ss.SS");
 
 }
