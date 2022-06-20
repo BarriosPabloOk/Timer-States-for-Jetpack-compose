@@ -6,7 +6,8 @@ This library is able to get the default formatted time with the help of a compos
 
 A StopWatchOrCountdown class is also provided that you can instantiate in a ViewModel.
 
-
+## Current Last Version
+- 2.0.0
 
 ## How to install dependencies
 1. Add it in your root build.gradle at the end of repositories and settings.gradle:
