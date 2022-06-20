@@ -17,16 +17,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import android.os.CountDownTimer
 import androidx.compose.runtime.Stable
 import com.pablobarriosdevs.stopwatchorcountdown.formatter.Formatter
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Formatter.Companion.formatTime
 import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.util.*
 
 @Stable
-class Countdown(millis: Long, val finish: ()->Unit) :TimerActions{
+class Countdown(
+    millis: Long,
+    private val pattern: Patterns = Patterns.HH_MM_SS,
+    private val finish: ()->Unit) :TimerActions{
+
     private  lateinit var timer :CountDownTimer
-    private val formatter = Formatter()
     private val base = millis
-    val stateFormat = MutableStateFlow(formatter.formatTime(millis, Patterns.MM_SS_SS))
+    val timeFormatted = MutableStateFlow(formatTime(millis, pattern))
     var timeInMillis = millis
         private set
 
@@ -34,7 +37,7 @@ class Countdown(millis: Long, val finish: ()->Unit) :TimerActions{
         timer = object :CountDownTimer(timeInMillis, 10L){
             override fun onTick(p0: Long) {
                 timeInMillis = p0
-                stateFormat.value = formatter.formatTime(timeInMillis, Patterns.MM_SS_SS)
+                timeFormatted.value = formatTime(timeInMillis, pattern)
             }
 
             override fun onFinish() {
@@ -51,7 +54,7 @@ class Countdown(millis: Long, val finish: ()->Unit) :TimerActions{
     override fun reset() {
         timer.cancel()
         timeInMillis = base
-        stateFormat.value = formatter.formatTime(timeInMillis, Patterns.MM_SS_SS)
+        timeFormatted.value = formatTime(timeInMillis, pattern)
     }
 
 

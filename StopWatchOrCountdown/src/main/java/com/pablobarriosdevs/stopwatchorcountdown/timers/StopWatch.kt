@@ -16,33 +16,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import androidx.compose.runtime.Stable
 import com.pablobarriosdevs.stopwatchorcountdown.formatter.Formatter
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Formatter.Companion.formatTime
 import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.*
 import java.util.Timer
 
 @Stable
-open class StopWatch(millis: Long):TimerActions{
-    private var timer =Timer()
+open class StopWatch(
+    millis: Long,
+    private val pattern: Patterns
+) : TimerActions {
+
+    private var timer = Timer()
     private var isRunning = false
-    private val formatter = Formatter()
+
     private val base = millis
     var timeInMillis = millis
         protected set
-    val stateFormat = MutableStateFlow(formatter.formatTime(millis, Patterns.MM_SS_SS))
+    val timeFormatted = MutableStateFlow(formatTime(millis, pattern))
 
 
     override fun start() {
-        if(isRunning) return
+        if (isRunning) return
         val task = mTimerTask {
             isRunning = true
             timeInMillis += 10
 
-            stateFormat.value = if (timeInMillis < 3600000L) formatter.formatTime(
+            timeFormatted.value = if (timeInMillis >= 3600000L) formatTime(
                 timeInMillis,
-                Patterns.MM_SS_SS
+                Patterns.HH_MM_SS_SS
             )
-            else formatter.formatTime(timeInMillis, Patterns.HH_MM_SS_SS)
+            else formatTime(timeInMillis, pattern)
         }
         timer.scheduleAtFixedRate(
             task, 0, 10
@@ -58,11 +63,11 @@ open class StopWatch(millis: Long):TimerActions{
     override fun reset() {
         pause()
         timeInMillis = base
-        stateFormat.value = formatter.formatTime(base, Patterns.MM_SS_SS)
+        timeFormatted.value = formatTime(base, pattern)
     }
 
-    private fun mTimerTask(block:()->Unit): TimerTask {
-        return object : TimerTask(){
+    private fun mTimerTask(block: () -> Unit): TimerTask {
+        return object : TimerTask() {
             override fun run() {
                 block()
             }

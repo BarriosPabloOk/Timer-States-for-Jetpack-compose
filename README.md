@@ -28,35 +28,48 @@ dependencyResolutionManagement {
         mavenCentral()
         maven{url 'https://jitpack.io'}
     }
-    }
+}
 ```
 2. Add the dependency at build.gradle
 ```groovy
 //build.gradle in app module
 dependencies {
-        implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
+    implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
 }
 ```
 
 ## How to use this library
-1. After installing the necessary dependencies, create  a ***rememberStopWatchOrCountdownState()*** function in your project.
+1. After installing the necessary dependencies, create  a ***remember state function***  in your project.
    To set an initial time, you must assign a value in milliseconds in the*** time*** parameter.
    You can also change the appearance of the formatting by changing the value of ***pattern***.
-   To indicate if you want a countdown instead of a Stop watch, you must put the parameter ***countdown = true***.
+   To work exactly, you can use the ***rememerStopWatch() ***and ***rememberCountdown()*** functions. The latter has a built-in lambda to be executed when the countdown reaches its end.
+   If you are not interested in working exactly, you can use ***rememberStopWatchOrCountdown()***, in which you must indicate in the ***countdown*** parameter whether it will behave as Stopwatch or countdown.
+
+   Likewise, you also have the* **StopWatch***, ***CountDown*** and* **StopWatchOrCountdown*** classes to be instantiated from a viewmodel.
+
 ```java
 // Declare within Jetpack Compose's setContent function or within another composable function
 // The sw state will behave like a Stop watch that will start with 5 seconds of initial time. 
 //The pattern was left to format the time that came by default. It will look like this: "mm:ss.SS"
 
 setContent {
-    val sw = rememberStopWatchOrCountdownState(time = 5000, countDown = false)
+
+   val sw = rememberStopWatch(time = 5000, pattern = Patterns.HH_MM_SS_SS)
+
+	val cd = rememberCountdown()
+	{
+	 //runs at the end of the countdown
+	Toast.makeText(context, "final", Toast.LENGTH_LONG).show() 
+	}
+	
+	 val sw2 = rememberStopWatchOrCountdownState(time = 5000, countDown = false)
 
 }
 ```
 2. To display the elapsed time, you can use a Text() function and define in the parameter ***text = sw.timeFormatted.value***
 ```java
 Text(
-    text = sw.timeFormatted?.collectAsState()?.value ?: "don't work"
+    text = sw.timeFormatted.collectAsState().value 
 )
 ```
 3. To start, pause, and stop the timer you are coding, *rememberStopWatchOrCountDownState()* returns an instance of a ***StopWatchOrCountdown*** object, so you can use its states.
@@ -69,7 +82,39 @@ Button(
 }
 ```
 
-## StopWatchOrCountdown Class
+## StopWatch ( millis:Long, private val pattern:Patterns): TimeActions
+### Public Properties
+
+|Name|Type|Visibility|
+| ------------ | ------------ | ------------ |
+|var timeInMillis| Long|Read only (private set)|
+|val timeFormatter| MutableStateFlow < String > |Read only (private set)|
+
+### Public Method
+
+|  Name |Return Type  |Description|
+| ------------ | ------------ | ------------ |
+|  start() |Unit   |start the timer  |
+| pause() |Unit  | pause the timer  |
+|reset()  | Unit  | reset the timer  |
+
+## CountDown ( millis:Long, private val pattern:Patterns, private val finish:()->Unit): TimeActions
+### Public Properties
+
+|Name|Type|Visibility|
+| ------------ | ------------ | ------------ |
+|var timeInMillis| Long|Read only (private set)|
+|val timeFormatter| MutableStateFlow < String > |Read only (private set)|
+
+### Public Method
+
+|  Name |Return Type  |Description|
+| ------------ | ------------ | ------------ |
+|  start() |Unit   |start the timer  |
+| pause() |Unit  | pause the timer  |
+|reset()  | Unit  | reset the timer  |
+
+## StopWatchOrCountdown ( _millis:Long, private val timePattern:Patterns, countdown:Boolean)
 ### Public Properties
 
 |Name|Type|Visibility|
@@ -86,18 +131,15 @@ Button(
 | pause() |Unit  | pause the timer  |
 |reset()  | Unit  | reset the timer  |
 
-## Formatter enum class
+## Formatter class
 You can use this class to format the time values of type Long to String, and thus display them on the screen.
 It also has static methods to format hours, minutes, seconds, and remaining milliseconds separately.
 
-### Enums
+### Formatter methods
 
-|Name|View|
-| ------------ | ------------ |
-|  MM_SS |00:00 |
-| MM_SS_SS  |00:00.00 |
-| HH_MM_SS  | 00:00:00 |
-|HH_MM_SS_SS|00:00:00.00|
+|  Name |Return Type  |Description|
+| ------------ | ------------ | ------------ |
+|formatTime(time : Long, pattern : Formatter)  | String  |returns a formatted string to display on the screen |
 
 ### Formatter.Companion methods
 
@@ -109,12 +151,27 @@ It also has static methods to format hours, minutes, seconds, and remaining mill
 |Long.millis()  | Long |returns the remaining number of milliseconds  |
 |formatTime(time : Long, pattern : Formatter)  | String  |returns a formatted string to display on the screen |
 
+## Patterns Enum
+This class lists the various types of patterns available for supported formatting.
+
+|Name|View|
+| ------------ | ------------ |
+|  MM_SS |00:00 |
+| MM_SS_SS  |00:00.00 |
+| HH_MM_SS  | 00:00:00 |
+|HH_MM_SS_SS|00:00:00.00|
 
 ## Collaborate
 This is a personal project that I did because it was difficult for me to implement this functionality to my applications.
 If you have an idea to improve performance, or to make usability easier, feel free to make a pull request to this project. I will gladly analyze it.
 
 ##  Changelog
+- 2.0.0
+    - Formatter.formatTime() switch to Formatter.Companion.formatTime()
+    - TimerActions interface created.
+    - rememberCountdown() and rememberStopWatch() created. More accuracy.
+    - CountDown and StopWatch classes created.
+    - Patterns enum created
 - 1.1.1
     - timeFormatted property's bug fixed
 - 1.0.1

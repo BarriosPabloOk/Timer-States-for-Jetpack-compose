@@ -30,19 +30,20 @@ class Formatter {
         fun Long.minutes(): Long = this / 1000 / 60
         fun Long.seconds(): Long = this / 1000 % 60
         fun Long.millis(): Long = this % 1000
-    }
-
-    fun formatTime(time: Long, pattern: Patterns): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val l = LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(time),
-                ZoneId.of("Etc/GMT+0")
-            )
-            val format = DateTimeFormatter.ofPattern(pattern.pattern, Locale.getDefault())
-            format.format(l)
-        } else {
-            val format = SimpleDateFormat(pattern.pattern, Locale.getDefault()).format(Date(time))
-            format
+        fun formatTime(time: Long, pattern: Patterns): String {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val l = LocalDateTime.ofInstant(
+                    Instant.ofEpochMilli(time),
+                    ZoneId.of("Etc/GMT+0")
+                )
+                val format = DateTimeFormatter.ofPattern(pattern.pattern, Locale.getDefault())
+                format.format(l)
+            } else {
+                val format = SimpleDateFormat(pattern.pattern, Locale.getDefault()).format(Date(time))
+                format
+            }
         }
     }
+
+
 }

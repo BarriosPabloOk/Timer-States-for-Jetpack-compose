@@ -16,15 +16,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import com.pablobarriosdevs.stopwatchorcountdown.timers.Countdown
 
 @Composable
 fun rememberCountdown(
     time:Long = 30000L,
+    pattern: Patterns = Patterns.HH_MM_SS,
     finish: ()->Unit
 
     ): Countdown {
     return remember {
-        Countdown(time, finish)
+        Countdown(time,pattern, finish)
     }
 }

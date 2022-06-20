@@ -1,8 +1,6 @@
 package com.pablobarriosdevs.timercomposables
 
-import android.app.Activity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -18,7 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.pablobarriosdevs.stopwatchorcountdown.states.rememberCountdown
+import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import com.pablobarriosdevs.stopwatchorcountdown.states.rememberStopWatch
 import com.pablobarriosdevs.timercomposables.ui.theme.TimerComposablesTheme
 
@@ -44,9 +42,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val context = LocalContext.current
     val sw = rememberStopWatch()
-/*    {
-        Toast.makeText(context, "final", Toast.LENGTH_LONG).show()
-    }*/
+
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -58,7 +54,7 @@ fun MainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text =sw.stateFormat.collectAsState().value,
+                text =sw.timeFormatted.collectAsState().value,
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Bold
             )
