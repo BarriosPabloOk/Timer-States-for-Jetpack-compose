@@ -35,7 +35,7 @@ dependencyResolutionManagement {
 ```groovy
 //build.gradle in app module
 dependencies {
-    implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:1.1.1'
+    implementation 'com.github.BarriosPabloOk:Timer-States-for-Jetpack-compose:<version>'
 }
 ```
 
