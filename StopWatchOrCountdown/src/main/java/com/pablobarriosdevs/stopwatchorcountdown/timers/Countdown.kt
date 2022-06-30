@@ -25,10 +25,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class Countdown(
     millis: Long,
     private val pattern: Patterns = Patterns.HH_MM_SS,
-    private val finish: ()->Unit) :TimerActions{
+    private val finish: ()->Unit
+) :TimerActions{
 
     private  lateinit var timer :CountDownTimer
     private val base = millis
+    var isRunning = false
+        private set
     val timeFormatted = MutableStateFlow(formatTime(millis, pattern))
     var timeInMillis = millis
         private set
@@ -45,16 +48,19 @@ class Countdown(
                 finish()
             }
         }.start()
+        isRunning=true
     }
 
     override fun pause() {
         timer.cancel()
+        isRunning= false
     }
 
     override fun reset() {
         timer.cancel()
         timeInMillis = base
         timeFormatted.value = formatTime(timeInMillis, pattern)
+        isRunning=false
     }
 
 

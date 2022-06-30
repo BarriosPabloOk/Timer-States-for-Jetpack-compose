@@ -29,9 +29,8 @@ open class StopWatch(
 ) : TimerActions {
 
     private var timer = Timer()
-    private var isRunning = false
-
-    private val base = millis
+    var isRunning = false
+        private set
     var timeInMillis = millis
         protected set
     val timeFormatted = MutableStateFlow(formatTime(millis, pattern))
@@ -62,8 +61,8 @@ open class StopWatch(
 
     override fun reset() {
         pause()
-        timeInMillis = base
-        timeFormatted.value = formatTime(base, pattern)
+        timeInMillis = 0L
+        timeFormatted.value = formatTime(0L, pattern)
     }
 
     private fun mTimerTask(block: () -> Unit): TimerTask {

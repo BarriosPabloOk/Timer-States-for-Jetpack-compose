@@ -43,9 +43,10 @@ dependencies {
 1. After installing the necessary dependencies, create  a ***remember state function***  in your project.
    To set an initial time, you must assign a value in milliseconds in the*** time*** parameter.
    You can also change the appearance of the formatting by changing the value of ***pattern***.
-   To work exactly, you can use the ***rememerStopWatch() ***and ***rememberCountdown()*** functions. The latter has a built-in lambda to be executed when the countdown reaches its end.
+   To work exactly, you can use the ***rememberStopWatch() ***and ***rememberCountdown()*** functions. The latter has a built-in lambda to be executed when the countdown reaches its end.
    If you are not interested in working exactly, you can use ***rememberStopWatchOrCountdown()***, in which you must indicate in the ***countdown*** parameter whether it will behave as Stopwatch or countdown.
-
+   ***These features do not support screen rotations***.
+2. 
    Likewise, you also have the* **StopWatch***, ***CountDown*** and* **StopWatchOrCountdown*** classes to be instantiated from a viewmodel.
 
 ```java
@@ -90,6 +91,7 @@ Button(
 | ------------ | ------------ | ------------ |
 |var timeInMillis| Long|Read only (private set)|
 |val timeFormatter| MutableStateFlow < String > |Read only (private set)|
+|var isRunning| Boolean |Read only (private set)|
 
 ### Public Method
 
@@ -106,6 +108,7 @@ Button(
 | ------------ | ------------ | ------------ |
 |var timeInMillis| Long|Read only (private set)|
 |val timeFormatter| MutableStateFlow < String > |Read only (private set)|
+|var isRunning| Boolean |Read only (private set)|
 
 ### Public Method
 
@@ -167,6 +170,8 @@ This is a personal project that I did because it was difficult for me to impleme
 If you have an idea to improve performance, or to make usability easier, feel free to make a pull request to this project. I will gladly analyze it.
 
 ##  Changelog
+- 2.0.1
+    - isRunning property switched to public visibility.
 - 2.0.0
     - Formatter.formatTime() switch to Formatter.Companion.formatTime()
     - TimerActions interface created.

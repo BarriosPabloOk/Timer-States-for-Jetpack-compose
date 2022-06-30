@@ -16,7 +16,11 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import com.pablobarriosdevs.stopwatchorcountdown.formatter.Patterns
 import com.pablobarriosdevs.stopwatchorcountdown.timers.StopWatch
 
@@ -24,8 +28,10 @@ import com.pablobarriosdevs.stopwatchorcountdown.timers.StopWatch
 fun rememberStopWatch(
     time:Long = 0L,
     pattern : Patterns  = Patterns.MM_SS_SS
-): StopWatch {
+): MutableState<StopWatch> {
     return remember {
-        StopWatch(time, pattern)
+        mutableStateOf(StopWatch(time, pattern))
     }
 }
+
+
